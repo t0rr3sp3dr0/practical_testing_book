@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unit Testing &#8212; The Practical Testing Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Organization of Unit Tests" href="organization_of_unit_tests.html" />
+    <link rel="prev" title="The Different Dimensions of Testing" href="../fundamentals/kinds.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practical Testing Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/basics.html">
+   Motivation and Basic Definitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/limitations.html">
+   Limitations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/kinds.html">
+   The Different Dimensions of Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Granularity
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Unit Testing
+  </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="organization_of_unit_tests.html">
+     Organization of Unit Tests
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="integrationtesting.html">
+   Integration Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="systemtesting.html">
+   System Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="acceptancetesting/acceptancetesting.html">
+   Acceptance Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Good/Bad Practices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/artifacts.html">
+   Test Artifacts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/bugreports.html">
+   Bug Reports
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Adequacy
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/idea.html">
+   How Good Are your Tests?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/coverage.html">
+   Structural Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/mutation.html">
+   Mutation Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Generation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/modelbased.html">
+   Model-Based Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/combinatorial.html">
+   Combinatorial Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/random.html">
+   Randomized Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/fuzzing.html">
+   Fuzzing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/propertybased.html">
+   Property-based Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Regression Testing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/buildsystems.html">
+   Build Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/continuousintegration.html">
+   Continuous Integration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/flakytests.html">
+   Flaky test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/selectionprio.html">
+   Test Selection and Prioritization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Debugging
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/scientific.html">
+   Scientific Debugging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/gitbisect.html">
+   Git Bisect
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/deltadebugging.html">
+   Hands On: Delta Debugging
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Misc
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/howtohelp.html">
+   How To Help
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/testgranularity/unittesting.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/damorimRG/practical_testing_book/master?urlpath=tree/testgranularity/unittesting.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/testgranularity/unittesting.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-python-unittest">
+   What is Python Unittest ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#classes-and-functions">
+   Classes and functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pro-tip">
+     Pro Tip:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hands-on">
+   Hands On
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-median-example">
+   The median example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-circle-example">
+   The circle example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-practical">
+   The practical
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="unit-testing">
+<h1>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h1>
+<p>Unit Tests is the phase where each unit of the system is tested individually. The purpose is to isolate each part of the system to verify that they are working as specified. It consists of checking the smallest unit of the software project.</p>
+<p>The use of this type of test throughout the implementation is possible to reduce the amount of bugs in the application. Basically unit tests work by comparing the results of the functions to be tested with expected values.</p>
+<p>The unit tests and automated tests are not primarily used to verify that a specific function is working correctly, but to ensure that after changes in the code base, your software continues to work.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>You have just created a simple calculator class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
+  <span class="c1"># constructor is empty </span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+  
+  <span class="c1"># return the addition</span>
+  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span>
+
+  <span class="c1">#return first value minus the second</span>
+  <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n1</span> <span class="o">-</span> <span class="n">n2</span>
+  
+  <span class="c1">#return the multiplication</span>
+  <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n1</span> <span class="o">*</span> <span class="n">n2</span>
+
+  <span class="c1">#return first value divided by the second</span>
+  <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">n1</span><span class="o">/</span><span class="n">n2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, you will want to test that all methods are working as expected.  To do this, you will create your test class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CalculatorTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span> <span class="c1"># create a class to test the Calculator class</span>
+  
+  <span class="c1"># creating a test for the method add</span>
+  <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span> <span class="c1"># checking if the result obtained is equal to the expected result</span>
+  
+  <span class="c1"># creating a test for the method subtract</span>
+  <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+  <span class="c1"># creating a test for the method multiply</span>
+  <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+  <span class="c1"># creating a test for the method divide</span>
+  <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We created 4 unit tests, each test is checking a method of the Calculator class. These checks are being done through calls to <code class="docutils literal notranslate"><span class="pre">Assertions</span></code>, in this case the <code class="docutils literal notranslate"><span class="pre">assertEqual</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to run the tests in jupyter notebook we call</span>
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results for the run tests are displayed in the first line: the ‘<code class="docutils literal notranslate"><span class="pre">.</span></code>’ means the test has passed. ‘<code class="docutils literal notranslate"><span class="pre">F</span></code>’ means the test failed and the ‘<code class="docutils literal notranslate"><span class="pre">s</span></code>’ the test was skipped.</p>
+</div>
+<div class="section" id="what-is-python-unittest">
+<h2>What is Python Unittest ?<a class="headerlink" href="#what-is-python-unittest" title="Permalink to this headline">¶</a></h2>
+<p>Unittest is a framework, which is basically a tool that unites several codes in common for one or several functionalities, for unit tests. It is available for Python versions 2.7 and 3.5 or higher.</p>
+<p>The unittest was created taking inspiration from JUnit, which is a framework for unit testing in the Java programming language.</p>
+</div>
+<div class="section" id="classes-and-functions">
+<h2>Classes and functions<a class="headerlink" href="#classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<p>Unittest has several functions, known as Assertions, useful for the development of unit tests. Below are some of these functions and a brief explanation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">assertEqual(a,</span> <span class="pre">b)</span>&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">tests</span> <span class="pre">if</span> <span class="pre">two</span> <span class="pre">values</span> <span class="pre">are</span> <span class="pre">equal</span> </code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertNotEqual(a,</span> <span class="pre">b)</span>&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">two</span> <span class="pre">values</span> <span class="pre">are</span> <span class="pre">NOT</span> <span class="pre">equal</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertTrue(a)</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">True</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertFalse(a)</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">False</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertIs(a,b)</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">'b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertIsNot(a,b)</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">'b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertIsNone(a)</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">None</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertIsNotNone(a)</span>&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertIn(a,</span> <span class="pre">b)</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">contained</span> <span class="pre">in</span> <span class="pre">'b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertNotIn(a,</span> <span class="pre">b)</span>&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">contained</span> <span class="pre">in</span> <span class="pre">'b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertGreater(a,</span> <span class="pre">b)</span>&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">&gt;</span> <span class="pre">'b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assertLess(a,</span> <span class="pre">b)</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">if</span> <span class="pre">'a'</span> <span class="pre">&lt;</span> <span class="pre">'b'</span> </code></p></li>
+</ul>
+<p>Note: many functions of Unittest, are similar but make a check to the contrary of the other case, as <code class="docutils literal notranslate"><span class="pre">assertEqual</span></code> and <code class="docutils literal notranslate"><span class="pre">assertNotEqual</span></code>. These functions are marked by the presence of keywords such as “Not” or “False” in their name.</p>
+<p>Unittest also has two very useful and widely used functions which are the <code class="docutils literal notranslate"><span class="pre">setUp()</span> </code>and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> functions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">setUp()</span></code> is a function called to prepare the test environment. It is called immediately before the execution of a test case and can be used for several purposes such as creating variables, instantiating objects or classes and many others.</p>
+<p><code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> is a function that is called immediately after the execution of a test case. It is called even if the test case generated an exception or even failed and is generally used to delete variables created during the execution of the test case, or to undo actions performed by the test that may affect the next tests or not.</p>
+<p>You can acess the Unnittest documentation <a class="reference external" href="https://docs.python.org/3/library/unittest.html">here</a>.</p>
+<div class="section" id="pro-tip">
+<h3>Pro Tip:<a class="headerlink" href="#pro-tip" title="Permalink to this headline">¶</a></h3>
+<p>You can see examples of using these <em>functions</em> and integrate with them on google colab</p>
+<p><a 
+href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/testgranularity/examples_asserts_functions.ipynb" target="_blank">
+<img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a></p>
+</div>
+</div>
+<div class="section" id="hands-on">
+<h2>Hands On<a class="headerlink" href="#hands-on" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we need import the unittest class to hands on</span>
+<span class="kn">import</span> <span class="nn">unittest</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-median-example">
+<h2>The median example<a class="headerlink" href="#the-median-example" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculates the median between 3 numbers</span>
+<span class="k">def</span> <span class="nf">median</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="n">med</span> <span class="o">=</span> <span class="n">c</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">):</span>
+      <span class="n">med</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">):</span>
+      <span class="n">med</span> <span class="o">=</span> <span class="n">a</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">):</span>
+      <span class="n">med</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">):</span>
+      <span class="n">med</span> <span class="o">=</span> <span class="n">a</span>
+
+  <span class="k">return</span> <span class="n">med</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will create three unit tests, to check if the median function passing the values <code class="docutils literal notranslate"><span class="pre">1,2</span> <span class="pre">and</span> <span class="pre">3</span></code>. In this case, we know that the median is 2. Let’s call the function so that the number 2 is in the first parameter, the second and the last. Each test is written in one method; notice that we put the nomenclature of the method in a very descriptive way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test case</span>
+<span class="k">class</span> <span class="nc">MedianTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">test_median_is_first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">test_median_is_last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+  <span class="c1"># used to skip the test under some justification        </span>
+  <span class="nd">@unittest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">&#39;not working&#39;</span><span class="p">)</span> 
+  <span class="k">def</span> <span class="nf">test_median_is_middle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run the tests in jupyter notebook</span>
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note in the tests <code class="docutils literal notranslate"><span class="pre">test_median_is_first</span></code> and <code class="docutils literal notranslate"><span class="pre">test_median_is_last</span></code>, where we see an <code class="docutils literal notranslate"><span class="pre">assertEquals</span></code> equality. And in the test <code class="docutils literal notranslate"><span class="pre">test_median_is_last</span></code> we call <code class="docutils literal notranslate"><span class="pre">assertNotEqual</span></code>, which checks if the values are not the same.</p>
+<p>The &#64;unittest.skip tells the framework that this test should be skipped. If you remove this command, the test will be run and will fail.</p>
+</div>
+<div class="section" id="the-circle-example">
+<h2>The circle example<a class="headerlink" href="#the-circle-example" title="Permalink to this headline">¶</a></h2>
+<p>Watch this great video about Unittest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;1Lfv5tUGsn8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/1Lfv5tUGsn8"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s create the circle class in python</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+
+<span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The radius must be a non-negative real number.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The radius must not be negative.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now let&#39;s write unit tests for this class</span>
+<span class="k">class</span> <span class="nc">TestCircleArea</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span> 
+    <span class="k">def</span> <span class="nf">test_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#Test area when radius &gt;= 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">circle_area</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">pi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">circle_area</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">circle_area</span><span class="p">(</span><span class="mf">2.1</span><span class="p">),</span> <span class="n">pi</span> <span class="o">*</span> <span class="mf">2.1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#Make sure value errors are raised when necessary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">circle_area</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#Make sure type errors are raised when necessary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">circle_area</span><span class="p">,</span> <span class="mi">3</span><span class="o">+</span><span class="mi">5</span><span class="n">j</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">circle_area</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">circle_area</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run the tests in jupyter notebook</span>
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>PS: to run the tests in a terminal, save the file with name “TestCircleArea.py”, then run:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">TestCircleArea.py</span></code></p>
+</div>
+<div class="section" id="the-practical">
+<h2>The practical<a class="headerlink" href="#the-practical" title="Permalink to this headline">¶</a></h2>
+<p>According to class Calculator that was presented above, elaborate at least three unit tests with two assertions. Enjoy!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CalculatorTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+  <span class="c1">#elaborate</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run the tests in jupyter notebook</span>
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./testgranularity"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../fundamentals/kinds.html" title="previous page">The Different Dimensions of Testing</a>
+    <a class='right-next' id="next-link" href="organization_of_unit_tests.html" title="next page">Organization of Unit Tests</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The World<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

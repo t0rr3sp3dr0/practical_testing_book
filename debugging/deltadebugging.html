@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hands On: Delta Debugging &#8212; The Practical Testing Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Credits" href="../misc/credits.html" />
+    <link rel="prev" title="Git Bisect" href="gitbisect.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practical Testing Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/basics.html">
+   Motivation and Basic Definitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/limitations.html">
+   Limitations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/kinds.html">
+   The Different Dimensions of Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Granularity
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/unittesting.html">
+   Unit Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/integrationtesting.html">
+   Integration Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/systemtesting.html">
+   System Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/acceptancetesting/acceptancetesting.html">
+   Acceptance Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Good/Bad Practices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/artifacts.html">
+   Test Artifacts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/bugreports.html">
+   Bug Reports
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Adequacy
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/idea.html">
+   How Good Are your Tests?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/coverage.html">
+   Structural Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/mutation.html">
+   Mutation Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Generation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/modelbased.html">
+   Model-Based Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/combinatorial.html">
+   Combinatorial Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/random.html">
+   Randomized Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/fuzzing.html">
+   Fuzzing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/propertybased.html">
+   Property-based Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Regression Testing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/buildsystems.html">
+   Build Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/continuousintegration.html">
+   Continuous Integration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/flakytests.html">
+   Flaky test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/selectionprio.html">
+   Test Selection and Prioritization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Debugging
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="scientific.html">
+   Scientific Debugging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gitbisect.html">
+   Git Bisect
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Hands On: Delta Debugging
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Misc
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/howtohelp.html">
+   How To Help
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/debugging/deltadebugging.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/damorimRG/practical_testing_book/master?urlpath=tree/debugging/deltadebugging.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/debugging/deltadebugging.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identify-the-test-case-s">
+   <strong>
+    1 - Identify the test case(s)
+   </strong>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identify-the-deltas">
+   <strong>
+    2 - Identify the deltas.
+   </strong>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#write-a-testing-function">
+   <strong>
+    3 - Write a testing function.
+   </strong>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#invoke-delta-debugging">
+   <strong>
+    4- Invoke Delta Debugging.
+   </strong>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   <strong>
+    Conclusion
+   </strong>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   <strong>
+    References
+   </strong>
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="hands-on-delta-debugging">
+<h1>Hands On: Delta Debugging<a class="headerlink" href="#hands-on-delta-debugging" title="Permalink to this headline">¶</a></h1>
+<p>Delta Debugging is a methodology that automates program debugging using a scientific approach of hypothesis-trial-result loop. It was created in 1999 when there were many open bugs in Mozilla’s bug database. Each bug describes a scenario which caused software to fail. The bug reports could contain a lot of irrelevant information and many of them could be equivalent. It would be very helpful in finding the error if we could simplify the input and still generate the same failures. So we follow the general pattern to put Delta Debugging to work:</p>
+<ol class="simple">
+<li><p>Identify the test case(s)</p></li>
+<li><p>Identify the deltas.</p></li>
+<li><p>Write a testing function.</p></li>
+<li><p>Invoke Delta Debugging.</p></li>
+</ol>
+<div class="section" id="identify-the-test-case-s">
+<h2><strong>1 - Identify the test case(s)</strong><a class="headerlink" href="#identify-the-test-case-s" title="Permalink to this headline">¶</a></h2>
+<p>The first step in performing delta debugging needs to meet <strong>2 prerequisites</strong>:</p>
+<ol class="simple">
+<li><p>A test case where your program fails.</p></li>
+<li><p>A test case where this failure does not happen.</p></li>
+</ol>
+<p>Our main program fails to return a <strong>NaN</strong> we want to investigate why.</p>
+<p>So let’s go to the example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="k">def</span> <span class="nf">functionA</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> 
+<span class="k">def</span> <span class="nf">functionB</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="mi">2</span><span class="p">;</span> 
+<span class="k">def</span> <span class="nf">functionC</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="mi">3</span><span class="p">;</span> 
+<span class="k">def</span> <span class="nf">functionD</span><span class="p">():</span>
+  <span class="k">return</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">def</span> <span class="nf">functionE</span><span class="p">():</span>
+  <span class="k">return</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">def</span> <span class="nf">functionF</span><span class="p">():</span>
+  <span class="k">return</span> <span class="mi">6</span><span class="p">;</span>
+<span class="k">def</span> <span class="nf">functionG</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">);</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+  <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+      <span class="n">inc</span><span class="o">*=</span><span class="n">a</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">inc</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our program consists of <strong>7</strong> small functions and a main function that receives a list of values ​​and makes an operation with them.</p>
+<p>So our 2 test cases are:</p>
+<ol class="simple">
+<li><p>Calling our main function with all the items on the list where we get a <strong>NaN</strong> return.</p></li>
+<li><p>Calling our main function with no item in the list, where it returns a valid value.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">main</span><span class="p">([</span><span class="n">functionA</span><span class="p">(),</span><span class="n">functionB</span><span class="p">(),</span><span class="n">functionC</span><span class="p">(),</span><span class="n">functionD</span><span class="p">(),</span><span class="n">functionE</span><span class="p">(),</span><span class="n">functionF</span><span class="p">(),</span><span class="n">functionG</span><span class="p">()]);</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">main</span><span class="p">([]);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NaN
+1
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="identify-the-deltas">
+<h2><strong>2 - Identify the deltas.</strong><a class="headerlink" href="#identify-the-deltas" title="Permalink to this headline">¶</a></h2>
+<p>In this next step we must find a set of deltas, we must find the difference between the execution that fails and the execution without failure and from that difference divide it into small equal parts.</p>
+<p>For our example, the entry that runs successfully is an empty list, the entry that causes the execution to fail is the difference between the entries. So we can divide our entry that fails into small equal parts and we will do that by dividing our entry into <strong>functions</strong>.</p>
+</div>
+<div class="section" id="write-a-testing-function">
+<h2><strong>3 - Write a testing function.</strong><a class="headerlink" href="#write-a-testing-function" title="Permalink to this headline">¶</a></h2>
+<p>In this stage of the tests, we have a function that receives a list of deltas:</p>
+<ol class="simple">
+<li><p>Returns PASS if the result is a number.</p></li>
+<li><p>Returns FAIL if the result is not a number.</p></li>
+</ol>
+<p>In our case, deltas are our functions where we multiply the results and test the return.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">functions</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">functions</span><span class="p">))):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">main</span><span class="p">(</span><span class="n">functions</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="nb">int</span><span class="p">)):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PASS&quot;</span><span class="p">);</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FAIL&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">([</span><span class="n">functionA</span><span class="p">(),</span><span class="n">functionB</span><span class="p">(),</span><span class="n">functionC</span><span class="p">(),</span><span class="n">functionD</span><span class="p">(),</span><span class="n">functionE</span><span class="p">(),</span><span class="n">functionF</span><span class="p">(),</span><span class="n">functionG</span><span class="p">()]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+FAIL
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="invoke-delta-debugging">
+<h2><strong>4- Invoke Delta Debugging.</strong><a class="headerlink" href="#invoke-delta-debugging" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have the test function, in this step we really want to know which function is the problem with that we will run the delta debugging that will show us for all the inputs what are the results produced. Having this view of execution we can know which function is causing us a problem.</p>
+<p>To make our job easier, let’s make a small change to our test function.</p>
+<p>We will create a dictionary, a python structure with key and value and within our test function we will save the entry of our main function as the key and as value the evaluation of our test function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">functions</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">functions</span><span class="p">))):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">main</span><span class="p">(</span><span class="n">functions</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="nb">int</span><span class="p">)):</span>
+      <span class="n">Dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">functions</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="s2">&quot;PASS&quot;</span><span class="p">;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">Dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">functions</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="s2">&quot;FAIL&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deltaDebugging</span><span class="p">():</span>
+  <span class="n">test</span><span class="p">([</span><span class="n">functionA</span><span class="p">(),</span><span class="n">functionB</span><span class="p">(),</span><span class="n">functionC</span><span class="p">(),</span><span class="n">functionD</span><span class="p">(),</span><span class="n">functionE</span><span class="p">(),</span><span class="n">functionF</span><span class="p">(),</span><span class="n">functionG</span><span class="p">()]);</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Dict</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">i</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PASS (1,)
+PASS (1, 2)
+PASS (1, 2, 3)
+PASS (1, 2, 3, 4)
+PASS (1, 2, 3, 4, 5)
+PASS (1, 2, 3, 4, 5, 6)
+FAIL (1, 2, 3, 4, 5, 6, Decimal(&#39;NaN&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<p>So calling deltaDebuggig we have:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deltaDebugging</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PASS (1,)
+PASS (1, 2)
+PASS (1, 2, 3)
+PASS (1, 2, 3, 4)
+PASS (1, 2, 3, 4, 5)
+PASS (1, 2, 3, 4, 5, 6)
+FAIL (1, 2, 3, 4, 5, 6, Decimal(&#39;NaN&#39;))
+FAIL (1, 2, 3, 4, 5, 6, Decimal(&#39;NaN&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Where, as a result, we can see what our main program has entered and what it has given us. With this, looking at the last line, it is clear that when we pass the G function to our main function, a failure results. With that the biggest entry we can have is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">main</span><span class="p">([</span><span class="n">functionA</span><span class="p">(),</span><span class="n">functionB</span><span class="p">(),</span><span class="n">functionC</span><span class="p">(),</span><span class="n">functionD</span><span class="p">(),</span><span class="n">functionE</span><span class="p">(),</span><span class="n">functionF</span><span class="p">()]));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>720
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>We show here how the delta debugging methodology works with a simple example to make the explanation clearer and more practical, as delta debugging is a methodology it can be implemented in several ways, below we leave a reference with another implementation.</p>
+</div>
+<div class="section" id="references">
+<h2><strong>References</strong><a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.st.cs.uni-saarland.de/dd/ddusage.php3">Using DeltaDebugging</a></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./debugging"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="gitbisect.html" title="previous page">Git Bisect</a>
+    <a class='right-next' id="next-link" href="../misc/credits.html" title="next page">Credits</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The World<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

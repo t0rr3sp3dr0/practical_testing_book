@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Testing &#8212; The Practical Testing Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Acceptance Testing" href="acceptancetesting/acceptancetesting.html" />
+    <link rel="prev" title="Mocking with Python" href="mocking.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practical Testing Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/basics.html">
+   Motivation and Basic Definitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/limitations.html">
+   Limitations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/kinds.html">
+   The Different Dimensions of Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Granularity
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="unittesting.html">
+   Unit Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="integrationtesting.html">
+   Integration Testing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   System Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="acceptancetesting/acceptancetesting.html">
+   Acceptance Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Good/Bad Practices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/artifacts.html">
+   Test Artifacts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/bugreports.html">
+   Bug Reports
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Adequacy
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/idea.html">
+   How Good Are your Tests?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/coverage.html">
+   Structural Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/mutation.html">
+   Mutation Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Generation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/modelbased.html">
+   Model-Based Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/combinatorial.html">
+   Combinatorial Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/random.html">
+   Randomized Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/fuzzing.html">
+   Fuzzing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/propertybased.html">
+   Property-based Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Regression Testing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/buildsystems.html">
+   Build Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/continuousintegration.html">
+   Continuous Integration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/flakytests.html">
+   Flaky test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/selectionprio.html">
+   Test Selection and Prioritization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Debugging
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/scientific.html">
+   Scientific Debugging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/gitbisect.html">
+   Git Bisect
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/deltadebugging.html">
+   Hands On: Delta Debugging
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Misc
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/howtohelp.html">
+   How To Help
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/testgranularity/systemtesting.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#framework">
+   Framework
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#robot">
+     ROBOT
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#main-advantages">
+       Main advantages
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code-structure">
+   CODE STRUCTURE
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#documentation">
+     Documentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#settings">
+     Settings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#variables">
+     Variables
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-cases">
+     Test Cases
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#keywords">
+     Keywords
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spaces-and-variables">
+     Spaces and Variables
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hands-on-robot-with-selenium2library">
+   Hands On: Robot with Selenium2Library
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#execution">
+   Execution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="system-testing">
+<h1>System Testing<a class="headerlink" href="#system-testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Traditionally, system testing is done when the software is working as a whole. An iterative life cycle allows system testing to take place much earlier, once well-formed subsets of use-case behavior are implemented.</p>
+<p>The system test can be considered the “third phase” of the tests, being the first unit or unit test, which tests the smallest units in the system, looking for logic and implementation errors in each module, separately. The second would be the integration test, which aims to detect flaws in the interaction between the units, generally the types of flaws found are sending and receiving data. Remembering that integration with other systems is not part of this phase.
+In practice they are executed under conditions similar to those that the user will use.</p>
+<p>For this, one of the ways used to simulate the user environment in a quick and practical way, is the automated interface tests.</p>
+</div>
+<div class="section" id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="robot">
+<h3>ROBOT<a class="headerlink" href="#robot" title="Permalink to this headline">¶</a></h3>
+<p>Robot is considered a framework and not just a test automation tool because it was built to provide all the necessary structure to meet an entire acceptance test automation architecture <a class="bibtex reference internal" href="#robotdocumentation" id="id1">[2]</a>. It allows to use keyword-driven, data-driven and / or behavior-driven (BDD) approaches. It has an easy-to-use tabular data syntax and allows users to use and create libraries in Python or Java. Has easy syntax, using human-readable keywords. The framework has a rich ecosystem around it, consisting of libraries and tools that are developed as separate projects.</p>
+<div class="section" id="main-advantages">
+<h4>Main advantages<a class="headerlink" href="#main-advantages" title="Permalink to this headline">¶</a></h4>
+<p>Having comprehensive documentation makes it easier to work with any tool. The Robot Framework is no exception, and has great documentation on their website.</p>
+<p>Also, after each test run, the Robot Framework provides a clear, concise, and human-readable HTML-test report. These reports are based on XML outputs from the tests. As an all-in-one reporting, it also helps when presenting to other stakeholders within an organization.</p>
+<p>The example below shows a test that aims to open a web page using the firefox browser: the first version is written using Python and Selenium webdriver, the second using the Robot framework.</p>
+<ul class="simple">
+<li><p>Python with Selenium WebDriver:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span> 
+<span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.facebook.com/&quot;</span> <span class="bp">self</span><span class="o">.</span><span class="n">verificationErrors</span> <span class="o">=</span> <span class="p">[]</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_next_alert</span> <span class="o">=</span> <span class="kc">True</span> <span class="n">Keyword</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Selenium Webdriver and Robot Framework:</p>
+<p>Open Browser https://www.facebook.com/         firefox</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="code-structure">
+<h2>CODE STRUCTURE<a class="headerlink" href="#code-structure" title="Permalink to this headline">¶</a></h2>
+<p>The structure of the script is simple and can be divided into four sections:</p>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>This keyword precedes the description of the functionality or test scenario. Be aware, because if the documentation is made in the section <strong>Settings</strong>, it should not be enclosed in square brackets. They are only used within <strong>Test Cases</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">This</span> <span class="pre">test</span> <span class="pre">open</span> <span class="pre">the</span> <span class="pre">webpage</span> <span class="pre">“https://www.amazon.in”</span> <span class="pre">Search</span> <span class="pre">for</span> <span class="pre">“unit</span> <span class="pre">test</span> <span class="pre">book”</span> <span class="pre">and</span> <span class="pre">then</span> <span class="pre">verify</span> <span class="pre">if</span> <span class="pre">the</span> <span class="pre">results</span> <span class="pre">match.</span></code></p>
+</div>
+<div class="section" id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h3>
+<p>This is where you configure the libraries to be used, paths to auxiliary files (page objects, for example), contexts and hooks.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Library</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Selenium2Library</span> <span class="pre">Suite</span> <span class="pre">Setup</span>&#160; <span class="pre">Go</span> <span class="pre">to</span> <span class="pre">homepage</span> <span class="pre">Suite</span> <span class="pre">Teardown</span>&#160; <span class="pre">Close</span> <span class="pre">All</span> <span class="pre">Browsers</span></code></p>
+</div>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<p>List of variables to be used (preferably with description) and definition of the values of some of these variables.</p>
+<p><code class="docutils literal notranslate"><span class="pre">${HOMEPAGE}</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">https://www.amazon.in</span> <span class="pre">${BROWSER}</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">chrome</span></code></p>
+</div>
+<div class="section" id="test-cases">
+<h3>Test Cases<a class="headerlink" href="#test-cases" title="Permalink to this headline">¶</a></h3>
+<p>This is the most important section, because without it your test will not run. This is where the test cases / scenarios are, with or without implementation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Amazon</span> <span class="pre">page</span> <span class="pre">and</span> <span class="pre">find</span> <span class="pre">books</span>&#160;&#160;&#160;&#160; <span class="pre">Amazon</span> <span class="pre">and</span> <span class="pre">check</span> <span class="pre">results</span>&#160;&#160; <span class="pre">unit</span> <span class="pre">test</span> <span class="pre">book</span>&#160;&#160; <span class="pre">results</span> <span class="pre">for</span> <span class="pre">&quot;unit</span> <span class="pre">test</span> <span class="pre">book&quot;</span></code></p>
+</div>
+<div class="section" id="keywords">
+<h3>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+<p>Here you can define keywords or implement the test scenarios described above. All of the above sections are optional, depending on how your code was written, except for <strong>Test Cases</strong>. I advise you to always use them for a better organization of the code.
+The labels below are not mandatory, but they also help with the organization.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Amazon</span> <span class="pre">and</span> <span class="pre">check</span> <span class="pre">results</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">[Arguments]</span>&#160;&#160;&#160;&#160; <span class="pre">${searchkey}</span>&#160;&#160;&#160;&#160; <span class="pre">${result}</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Input</span> <span class="pre">Text</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">id=twotabsearchtextbox</span>&#160;&#160;&#160;&#160; <span class="pre">${searchkey}</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Click</span> <span class="pre">Element</span>&#160;&#160;&#160; <span class="pre">xpath=//div[&#64;class='nav-search-submit</span> <span class="pre">nav-sprite']/input[&#64;class='nav-input'</span> <span class="pre">and</span> <span class="pre">1]</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Wait</span> <span class="pre">Until</span> <span class="pre">Page</span> <span class="pre">Contains</span>&#160;&#160;&#160; <span class="pre">${result}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Go</span> <span class="pre">to</span> <span class="pre">homepage</span>&#160;&#160;&#160;&#160; <span class="pre">Open</span> <span class="pre">Browser</span>&#160;&#160;&#160; <span class="pre">${HOMEPAGE}</span>&#160;&#160;&#160;&#160; <span class="pre">${BROWSER}</span></code></p>
+</div>
+<div class="section" id="spaces-and-variables">
+<h3>Spaces and Variables<a class="headerlink" href="#spaces-and-variables" title="Permalink to this headline">¶</a></h3>
+<p>The variables in the Robot are represented by <code class="docutils literal notranslate"><span class="pre">${variable}</span></code>. The Robot has the peculiarity of ignoring a space between words.
+<code class="docutils literal notranslate"><span class="pre">${variable_name}</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">${variable</span> <span class="pre">name}</span></code>. They are also case insensitive. The arguments are divided into at least two spaces. For example:</p>
+<ul class="simple">
+<li><p>command (two spaces) argument1 (two spaces) argument 2.</p></li>
+</ul>
+<p>Note that the space in “argument 2” is ignored. The assignment sign (=) is also optional. Values can be assigned, either:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">{value}</span> <span class="pre">value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">{value}</span> <span class="pre">=</span> <span class="pre">value</span></code></p></li>
+</ul>
+<p>An important observation to be made is that, being the Robot Framework based on Python, it is worth mentioning that this is an indented language, that is, command blocks are separated by spaces or tabs, forming a mandatory visual indentation. There are no <em>“open”</em> and <em>“close”</em> symbols, Robot inherits this formatting.</p>
+</div>
+</div>
+<div class="section" id="hands-on-robot-with-selenium2library">
+<h2>Hands On: Robot with Selenium2Library<a class="headerlink" href="#hands-on-robot-with-selenium2library" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://robotframework.org/Selenium2Library/Selenium2Library.html">Selenium2Library</a> is a web testing library for Robot Framework.</p>
+</div></blockquote>
+<p>To execute a robot program, some requirements are necessary. Let’s go to the codelab to see how it work!</p>
+<p><a 
+href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/testgranularity/robot.ipynb" target="_blank">
+<img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a></p>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Now that you know the structure of a robot program, the complete code is showed below and will do the following steps:</p>
+<ol class="simple">
+<li><p>open the google chrome browser</p></li>
+<li><p>open the website https://www.amazon.in</p></li>
+<li><p>in the search bar it will type “unit test book”</p></li>
+<li><p>check if the results returned in the search correspond to test books of unity</p></li>
+</ol>
+<p>To identify the search bar and button, their respective html identifiers are used in the javascript code of the page.</p>
+<p><strong>Tip</strong>: just open the page, and with the right button choose <em>inspect</em>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">***</span> <span class="pre">Settings</span> <span class="pre">***</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Library</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Selenium2Library</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Suite</span> <span class="pre">Setup</span>&#160; <span class="pre">Go</span> <span class="pre">to</span> <span class="pre">homepage</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Suite</span> <span class="pre">Teardown</span>&#160; <span class="pre">Close</span> <span class="pre">All</span> <span class="pre">Browsers</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">***</span> <span class="pre">Variables</span> <span class="pre">***</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">${HOMEPAGE}</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">https://www.amazon.in</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">${BROWSER}</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">chrome</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">***</span> <span class="pre">Test</span> <span class="pre">Cases</span> <span class="pre">***</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Amazon</span> <span class="pre">page</span> <span class="pre">and</span> <span class="pre">find</span> <span class="pre">books</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Amazon</span> <span class="pre">and</span> <span class="pre">check</span> <span class="pre">results</span>&#160;&#160; <span class="pre">unit</span> <span class="pre">test</span> <span class="pre">book</span>&#160;&#160; <span class="pre">results</span> <span class="pre">for</span> <span class="pre">&quot;unit</span> <span class="pre">test</span> <span class="pre">book&quot;</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">***</span> <span class="pre">Keywords</span> <span class="pre">***</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Amazon</span> <span class="pre">and</span> <span class="pre">check</span> <span class="pre">results</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">[Arguments]</span>&#160;&#160;&#160;&#160; <span class="pre">${searchkey}</span>&#160;&#160;&#160;&#160; <span class="pre">${result}</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Input</span> <span class="pre">Text</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">id=twotabsearchtextbox</span>&#160;&#160;&#160;&#160; <span class="pre">${searchkey}</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Click</span> <span class="pre">Element</span>&#160;&#160;&#160; <span class="pre">xpath=//div[&#64;class='nav-search-submit</span> <span class="pre">nav-sprite']/input[&#64;class='nav-input'</span> <span class="pre">and</span> <span class="pre">1]</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Wait</span> <span class="pre">Until</span> <span class="pre">Page</span> <span class="pre">Contains</span>&#160;&#160;&#160; <span class="pre">${result}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">Go</span> <span class="pre">to</span> <span class="pre">homepage</span></code></p>
+<p><code class="docutils literal notranslate">&#160;&#160;&#160; <span class="pre">Open</span> <span class="pre">Browser</span>&#160;&#160;&#160; <span class="pre">${HOMEPAGE}</span>&#160;&#160;&#160;&#160; <span class="pre">${BROWSER}</span></code></p>
+<p>To start running the Robot Framework we will use the robot that runs the test scripts and the rebot for the processed results.</p>
+<p>You must create a file and save it as a .robot to place all your test cases. Then run:</p>
+<p><em>robot namefile.robot</em></p>
+<p><img alt="Gif" src="../_images/robot.gif" /></p>
+<p>This command will run the test suite and generate screenshots and files with all test reports.</p>
+<hr class="docutils" />
+<p><strong>Challenge. Let’s Test!</strong></p>
+<blockquote>
+<div><p>On this <a class="bibtex reference internal" href="#robotlibrary" id="id2">[3]</a> <a class="reference external" href="http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html#Click%20Link"><em>link</em></a> site you will find all the keywords that can be used to create web interface tests using this same configuration.
+Use and abuse your creativity to create more tests.</p>
+<p>To encourage you, I challenge you to create a test that opens firefox browser, go to <a class="bibtex reference internal" href="#robotorg" id="id3">[1]</a> robotframework.org and capture a screenshot of the home screen.</p>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p id="bibtex-bibliography-testgranularity/systemtesting-0"><dl class="citation">
+<dt class="bibtex label" id="robotorg"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>Robot frame work. <span><a class="reference external" href="#"></a></span>https://robotframework.org/. Accessed: 2020-07-20.</p>
+</dd>
+<dt class="bibtex label" id="robotdocumentation"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dd><p>Robot framework documentation. <span><a class="reference external" href="#"></a></span>https://robotframework.org/robotframework/. Accessed: 2020-07-20.</p>
+</dd>
+<dt class="bibtex label" id="robotlibrary"><span class="brackets"><a class="fn-backref" href="#id2">3</a></span></dt>
+<dd><p>Seleniumlibrary. <span><a class="reference external" href="#"></a></span>http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html. Accessed: 2020-07-20.</p>
+</dd>
+</dl>
+</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./testgranularity"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="mocking.html" title="previous page">Mocking with Python</a>
+    <a class='right-next' id="next-link" href="acceptancetesting/acceptancetesting.html" title="next page">Acceptance Testing</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The World<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

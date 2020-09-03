@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples Asserts Functions &#8212; The Practical Testing Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practical Testing Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/basics.html">
+   Motivation and Basic Definitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/limitations.html">
+   Limitations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/kinds.html">
+   The Different Dimensions of Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Granularity
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="unittesting.html">
+   Unit Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="integrationtesting.html">
+   Integration Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="systemtesting.html">
+   System Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="acceptancetesting/acceptancetesting.html">
+   Acceptance Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Good/Bad Practices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/artifacts.html">
+   Test Artifacts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/bugreports.html">
+   Bug Reports
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Adequacy
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/idea.html">
+   How Good Are your Tests?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/coverage.html">
+   Structural Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testadequacy/mutation.html">
+   Mutation Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Generation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/modelbased.html">
+   Model-Based Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/combinatorial.html">
+   Combinatorial Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/random.html">
+   Randomized Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/fuzzing.html">
+   Fuzzing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/propertybased.html">
+   Property-based Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Regression Testing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/buildsystems.html">
+   Build Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/continuousintegration.html">
+   Continuous Integration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/flakytests.html">
+   Flaky test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/selectionprio.html">
+   Test Selection and Prioritization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Debugging
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/scientific.html">
+   Scientific Debugging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/gitbisect.html">
+   Git Bisect
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/deltadebugging.html">
+   Hands On: Delta Debugging
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Misc
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/howtohelp.html">
+   How To Help
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/testgranularity/examples_asserts_functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/damorimRG/practical_testing_book/master?urlpath=tree/testgranularity/examples_asserts_functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/testgranularity/examples_asserts_functions.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#we-elaborate-some-simple-examples-of-the-most-used-assert-functions">
+   We elaborate some simple examples of the most used Assert functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertequal-a-b">
+   assertEqual(a,b)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertnotequal">
+   assertNotEqual
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#asserttrue-a-and-assertfalse-a">
+   assertTrue(a) and assertFalse(a)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertions-a-b-and-assertisnot-a-b">
+   assertions(a, b) and assertIsNot(a, b)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertisnone-a-and-assertisnotnone-a">
+   assertIsNone(a) and assertIsNotNone(a)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertin-a-b-and-assertnotin-a-b">
+   assertIn(a, b) and assertNotIn(a, b)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertalmostequal-a-b-c-and-assertnotalmostequal-a-b-c">
+   assertAlmostEqual(a, b, c) and assertNotAlmostEqual(a, b, c)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertgreater-a-b-and-assertless-a-b">
+   assertGreater(a, b) and assertLess(a, b)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assertgreaterequal-a-b-and-assertlessequal-a-b">
+   assertGreaterEqual(a, b) and assertLessEqual(a, b)
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="examples-asserts-functions">
+<h1>Examples Asserts Functions<a class="headerlink" href="#examples-asserts-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="we-elaborate-some-simple-examples-of-the-most-used-assert-functions">
+<h2>We elaborate some simple examples of the most used Assert functions<a class="headerlink" href="#we-elaborate-some-simple-examples-of-the-most-used-assert-functions" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># importing the framework</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: the results for the run tests are displayed in the first line: the ‘.’ means the test has passed. ‘F’ means the test failed and the ‘s’ the test was skipped. Enjoy!</p>
+</div>
+<div class="section" id="assertequal-a-b">
+<h2>assertEqual(a,b)<a class="headerlink" href="#assertequal-a-b" title="Permalink to this headline">¶</a></h2>
+<p>This function will test if two values are equal, otherwise the test case will fail</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">test_ex1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s1">&#39;Software&#39;</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s1">&#39;SOFTWARE&#39;</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># run the tests in jupyter notebook</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f96048&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The a.upper () function is used to capitalize the letters of a string, that is, “Test” .upper () will result in “TEST”.</p>
+<p>In the example above, we are comparing whether the word “Software” applying the upper () function is equal to “SOFTWARE”. And it is, soon the test case will pass.</p>
+</div>
+<div class="section" id="assertnotequal">
+<h2>assertNotEqual<a class="headerlink" href="#assertnotequal" title="Permalink to this headline">¶</a></h2>
+<p>This function deals with the opposite case of assertEquals, that is, checking if two variables are not the same, if it is the test case it will fail.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">test_ex2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> 
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f96d68&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This test case will create the variables ‘a’ and ‘b’ and will verify that their values do not match. We assign the value ‘1’ to ‘a’ and ‘7’ to ‘b’, so as the values are different the test will pass.</p>
+</div>
+<div class="section" id="asserttrue-a-and-assertfalse-a">
+<h2>assertTrue(a) and assertFalse(a)<a class="headerlink" href="#asserttrue-a-and-assertfalse-a" title="Permalink to this headline">¶</a></h2>
+<p>These functions will check whether a variable or expression is true or false.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">test_ex3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f8fa20&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example will return success because the expression of the variable ‘a’ will return false when calculating the expression.</p>
+</div>
+<div class="section" id="assertions-a-b-and-assertisnot-a-b">
+<h2>assertions(a, b) and assertIsNot(a, b)<a class="headerlink" href="#assertions-a-b-and-assertisnot-a-b" title="Permalink to this headline">¶</a></h2>
+<p>Check whether the first and second values are instances of the same variable or not.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">test_ex4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        
+  <span class="k">def</span> <span class="nf">test_ex5</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">123</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.F
+======================================================================
+FAIL: test_ex5 (__main__.TestCaseExamples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;&lt;ipython-input-18-09c17c1b8a42&gt;&quot;, line 11, in test_ex5
+    self.assertIs(a, b)
+AssertionError: 2 is not 125
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f47518&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this example, the test case “test_ex4” will pass because ‘b’ is an instance of ‘a’. In the case “test_ex5” it will fail, due to the sum operation made with ‘a’, ’b’ it will no longer be an instance of ‘a’.</p>
+</div>
+<div class="section" id="assertisnone-a-and-assertisnotnone-a">
+<h2>assertIsNone(a) and assertIsNotNone(a)<a class="headerlink" href="#assertisnone-a-and-assertisnotnone-a" title="Permalink to this headline">¶</a></h2>
+<p>It will check if “a” is None.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">test_ex6</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F
+======================================================================
+FAIL: test_ex6 (__main__.TestCaseExamples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;&lt;ipython-input-19-5510a0fefdfd&gt;&quot;, line 5, in test_ex6
+    self.assertIsNone(a)
+AssertionError: &#39;test&#39; is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f476a0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, it will be checked if it stores an undefined value, that is, “None”. But this test case will fail because it has a stored value</p>
+</div>
+<div class="section" id="assertin-a-b-and-assertnotin-a-b">
+<h2>assertIn(a, b) and assertNotIn(a, b)<a class="headerlink" href="#assertin-a-b-and-assertnotin-a-b" title="Permalink to this headline">¶</a></h2>
+<p>These functions will check whether the value of a is contained or not b, that is, check whether or not a is in b, which can be some structure as an array or even an object.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+	<span class="k">def</span> <span class="nf">test_ex7</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c5836630&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example the test case will pass, since the value of ‘a’ is 2 and is present within the array stored in ‘b’.</p>
+</div>
+<div class="section" id="assertalmostequal-a-b-c-and-assertnotalmostequal-a-b-c">
+<h2>assertAlmostEqual(a, b, c) and assertNotAlmostEqual(a, b, c)<a class="headerlink" href="#assertalmostequal-a-b-c-and-assertnotalmostequal-a-b-c" title="Permalink to this headline">¶</a></h2>
+<p>These functions will check whether ‘a’ and ‘b’ have a difference of up to ‘c’.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">test_ex8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertNotAlmostEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f53358&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this example the test case will fail, because ‘a’ has a value of 5 and ‘c’ has a value of 4, if ‘b’ is greater than or equal to 1 or greater than or equal to 9, the test case will pass, however, ‘b’ has a value of 10, which does not meet the function, so the test case will fail.</p>
+</div>
+<div class="section" id="assertgreater-a-b-and-assertless-a-b">
+<h2>assertGreater(a, b) and assertLess(a, b)<a class="headerlink" href="#assertgreater-a-b-and-assertless-a-b" title="Permalink to this headline">¶</a></h2>
+<p>These functions will check if one element is greater or less than the other, assertGreater (a, b) will check if ‘a’ is greater than ‘b’, while assertLess (a, b) will check for ‘a’ is less than ‘b’.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+	<span class="k">def</span> <span class="nf">test_ex9</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="mi">10</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>F
+======================================================================
+FAIL: test_ex9 (__main__.TestCaseExamples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;&lt;ipython-input-22-3ce14a65703c&gt;&quot;, line 6, in test_ex9
+    self.assertGreater(a, b)
+AssertionError: 5 not greater than 10
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f8f080&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example will check if ‘a’ is greater than ‘b’, but as ‘a’ has a value of 5 and ‘b’ has a value of 10, it is noticed that 5 is not greater than 10, so the test case will fail .</p>
+</div>
+<div class="section" id="assertgreaterequal-a-b-and-assertlessequal-a-b">
+<h2>assertGreaterEqual(a, b) and assertLessEqual(a, b)<a class="headerlink" href="#assertgreaterequal-a-b-and-assertlessequal-a-b" title="Permalink to this headline">¶</a></h2>
+<p>These functions are similar to the assertGreater (a, b) assertLess (a, b) functions seen above. They check whether an element is greater than or equal to or less than or equal to the other. AssertGreaterEqual (a, b) will check whether ‘a’ is greater than or equal to ‘b’, while assertLessEqual (a, b) will check whether ‘a’ is less than or equal to ‘b’.</p>
+<p>Example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestCaseExamples</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">test_ex10</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;unittest.main.TestProgram at 0x7f43c4f53898&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This test case will do two checks and knowing that ‘a’ has a value of 10, ‘b’ has a value of 10 and ‘c’ has a value of 5, the first check will pass because ‘a’ equals ‘b’ and the second also will pass, because ‘a’ is greater than ‘c’.</p>
+<p>Unittest has several other assertive functions, You can find them in the <a class="reference external" href="https://docs.python.org/3/library/unittest.html">documentation</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./testgranularity"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The World<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mutation Testing &#8212; The Practical Testing Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model-Based Testing" href="../testgeneration/modelbased.html" />
+    <link rel="prev" title="Structural Testing" href="coverage.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practical Testing Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/basics.html">
+   Motivation and Basic Definitions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/limitations.html">
+   Limitations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/kinds.html">
+   The Different Dimensions of Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Granularity
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/unittesting.html">
+   Unit Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/integrationtesting.html">
+   Integration Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/systemtesting.html">
+   System Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgranularity/acceptancetesting/acceptancetesting.html">
+   Acceptance Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Good/Bad Practices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/artifacts.html">
+   Test Artifacts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../goodpractices/bugreports.html">
+   Bug Reports
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Adequacy
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="idea.html">
+   How Good Are your Tests?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="coverage.html">
+   Structural Testing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Mutation Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Test Generation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/modelbased.html">
+   Model-Based Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/combinatorial.html">
+   Combinatorial Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/random.html">
+   Randomized Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/fuzzing.html">
+   Fuzzing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testgeneration/propertybased.html">
+   Property-based Testing
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Regression Testing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/buildsystems.html">
+   Build Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/continuousintegration.html">
+   Continuous Integration
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/flakytests.html">
+   Flaky test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../testregression/selectionprio.html">
+   Test Selection and Prioritization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Debugging
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/scientific.html">
+   Scientific Debugging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/gitbisect.html">
+   Git Bisect
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../debugging/deltadebugging.html">
+   Hands On: Delta Debugging
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Misc
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../misc/howtohelp.html">
+   How To Help
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/testadequacy/mutation.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mutation-operators">
+   Mutation Operators
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples-of-operators-used">
+     Examples of Operators Used
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#structural-mutation-operators">
+       Structural mutation operators
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#object-oriented-mutation-operators">
+       Object-Oriented mutation operators
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#python-related-mutation-operators">
+       Python-related mutation operators
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pros-and-cons">
+   Pros and Cons
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pros">
+     Pros
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cons">
+     Cons
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hands-on-mutpy">
+   Hands On: MutPy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="mutation-testing">
+<h1>Mutation Testing<a class="headerlink" href="#mutation-testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Mutation Testing propose the creation of variations of the software under test in order that these tests show that these variations are not correct, therefore by elimination it can be verified that the original program is correct, these checks are made based on execution of existing unit tests. With this in mind, we can consider mutation testing as a technique to help in the process of improving test cases, making them more efficient, as well as to improve or guarantee the quality of these test cases, note that the test technique of mutation testing is a white box test technique.</p>
+<p>Mutation Testing works in the following way, the mutation operators are used on the original code making small changes on those in order to generate some variations called mutants, hence the name given to the technique. After the mutants have been generated, the tests originally used to test the code are performed on the generated mutants, if these mutants fail the test cases they will be considered ‘killed’ mutants, if any mutant does not fail it is considered a ‘survived’ mutant and this is an indication that the tests need to be reviewed/analyzed, making these tests more efficient after these analyzes and corrections.</p>
+<p>Here is an example of a mutation in a python code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">total</span><span class="o">+=</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">total</span>
+</pre></div>
+</div>
+<p>The Assignment Operator Replacement (ASR) would replace <code class="docutils literal notranslate"><span class="pre">+=</span></code> with <code class="docutils literal notranslate"><span class="pre">-=</span></code> and produce the following mutant:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">total</span><span class="o">-=</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">total</span>
+</pre></div>
+</div>
+<p>or other change can be the Constant Replacement (CRP) that would replace <code class="docutils literal notranslate"><span class="pre">total</span> <span class="pre">=</span> <span class="pre">0</span></code> with <code class="docutils literal notranslate"><span class="pre">total</span> <span class="pre">=</span> <span class="pre">1</span></code> and produce the following mutant:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">total</span><span class="o">+=</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">total</span>
+</pre></div>
+</div>
+<p>When the mutants survive the tests, two situations can be considered, the first is when the test cases are not good enough, as they have not identified the changes in the mutants, and the second is the equivalence between the original program and the mutant called Equivalent Mutant, equivalent mutants are one of the major problems in using mutation tests.</p>
+<p>For example, let’s consider a particular code section of a program <em>pro</em>, and we’re going to indicate a mutant for that program <em>mut</em>. In this case the <em>mut</em> is going to be an equivalent mutant if <em>mut</em> is syntactically different from <em>pro</em> but have the same behavior as <em>pro</em>.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Program pro</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="cm">/* i value still the same */</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Equivalent Mutant mut</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">!=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="cm">/* i value still the same */</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The example above shows a mutant that was generated by the Relational Operator Replacement (ROR), which changes the operator  <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> for <code class="docutils literal notranslate"><span class="pre">!=</span></code>, if during the execution of the mutant the loop instruction does not change the value of <code class="docutils literal notranslate"><span class="pre">i</span></code>, in this case both, the program pro and your mutant mut, will produce the same output.</p>
+</div>
+<div class="section" id="mutation-operators">
+<h2>Mutation Operators<a class="headerlink" href="#mutation-operators" title="Permalink to this headline">¶</a></h2>
+<p>Mutation operators are changes that are made to the original code in order to generate mutants, these changes can be made by modifying expressions by changing, adding or removing operators and/or statements. These operators can be arithmetic, relational, conditional, logical, assignment, among others.</p>
+<div class="section" id="examples-of-operators-used">
+<h3>Examples of Operators Used<a class="headerlink" href="#examples-of-operators-used" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="structural-mutation-operators">
+<h4>Structural mutation operators<a class="headerlink" href="#structural-mutation-operators" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>AOD - Arithmetic Operator Deletion</p></li>
+<li><p>AOR - Arithmetic Operator Replacement</p></li>
+<li><p>AOI - Arithmetic Operator Insertion</p></li>
+<li><p>COD - Conditional Operator Deletion</p></li>
+<li><p>COR - Conditional Operator Replacement</p></li>
+<li><p>COI - Conditional Operator Insertion</p></li>
+<li><p>ASR - Assignment Operator Replacement</p></li>
+<li><p>LOD - Logical Operator Deletion</p></li>
+<li><p>LOR - Logical Operator Replacement</p></li>
+<li><p>LOI - Logical Operator Insertion</p></li>
+<li><p>BCR - Break Continue Replacement</p></li>
+<li><p>CRP - Constant Replacement</p></li>
+<li><p>LCR - Logical Connector Replacement</p></li>
+<li><p>ROR - Relational Operator Replacement</p></li>
+<li><p>SOR - Shift Operator Replacement</p></li>
+</ul>
+</div>
+<div class="section" id="object-oriented-mutation-operators">
+<h4>Object-Oriented mutation operators<a class="headerlink" href="#object-oriented-mutation-operators" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>EHD - Exception Handler Deletion</p></li>
+<li><p>EXS - Exception Swallowing</p></li>
+<li><p>IHD - Hiding Variable Deletion</p></li>
+<li><p>IOD - Overriding Method Deletion</p></li>
+<li><p>IOP - Overridden Method Calling Position Change</p></li>
+<li><p>SCD - Super Calling Deletion</p></li>
+<li><p>SCI - Super Calling Insertion</p></li>
+</ul>
+</div>
+<div class="section" id="python-related-mutation-operators">
+<h4>Python-related mutation operators<a class="headerlink" href="#python-related-mutation-operators" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>DDL - Decorator Deletion</p></li>
+<li><p>SIR - Slice Index Remove</p></li>
+</ul>
+<p>Some of this operators will be shown on ‘Hands On: MutPy’ section.</p>
+</div>
+</div>
+</div>
+<div class="section" id="pros-and-cons">
+<h2>Pros and Cons<a class="headerlink" href="#pros-and-cons" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pros">
+<h3>Pros<a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Creation of effective test suites;</p></li>
+<li><p>Verification of the suite’s reliability;</p></li>
+<li><p>Help in refactoring tests;</p></li>
+</ul>
+</div>
+<div class="section" id="cons">
+<h3>Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The high computational cost;</p></li>
+<li><p>The amount of human effort involved;</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>Good materials on Mutation testing can be found in the literature, some of which were used as the basis for the elaboration of this chapter, such as the survey published by Jia and Harman (2011)<a class="bibtex reference internal" href="#id8" id="id1">[5]</a>, Ma and Offutt (2005)<a class="bibtex reference internal" href="#ma2005description" id="id2">[2]</a> and Dereziska and Halas (2014)<a class="bibtex reference internal" href="#id7" id="id3">[4]</a> publications that also talk about mutation operators, among other works such as those by Madeyski et al (2014)<a class="bibtex reference internal" href="#id9" id="id4">[6]</a>, Frankl et al (1997)<a class="bibtex reference internal" href="#frankl1997all" id="id5">[1]</a>, and Papadakis et al (2019)<a class="bibtex reference internal" href="#papadakis2019chapter" id="id6">[3]</a>.</p>
+</div>
+<div class="section" id="hands-on-mutpy">
+<h2>Hands On: MutPy<a class="headerlink" href="#hands-on-mutpy" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://pypi.org/project/MutPy/">MutPy</a> is a mutation testing tool for Python 3.3+ source code. MutPy supports standard unittest module, generates YAML/HTML reports and has colorful output. It applies mutation on AST level. You could boost your mutation testing process with high order mutations (HOM) and code coverage analysis.</p>
+</div></blockquote>
+<p>For a more constructive practice, let’s hands on at Colab:</p>
+<a href="https://colab.research.google.com/github/damorimRG/practical_testing_book/blob/master/testadequacy/mutation.ipynb" target="_blank"> 
+    <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p id="bibtex-bibliography-testadequacy/mutation-0"><dl class="citation">
+<dt class="bibtex label" id="frankl1997all"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
+<dd><p>Phyllis G Frankl, Stewart N Weiss, and Cang Hu. All-uses vs mutation testing: an experimental comparison of effectiveness. <em>Journal of Systems and Software</em>, 38(3):235–253, 1997.</p>
+</dd>
+<dt class="bibtex label" id="ma2005description"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Yu-Seung Ma and Jeff Offutt. Description of method-level mutation operators for java. <em>Electronics and Telecommunications Research Institute, Korea, Tech. Rep</em>, 2005.</p>
+</dd>
+<dt class="bibtex label" id="papadakis2019chapter"><span class="brackets"><a class="fn-backref" href="#id6">3</a></span></dt>
+<dd><p>Mike Papadakis, Marinos Kintis, Jie Zhang, Yue Jia, Yves Le Traon, and Mark Harman. Chapter six—mutation testing advances: an analysis and survey. volume 112 of advances in computers. 2019.</p>
+</dd>
+<dt class="bibtex label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">4</a></span></dt>
+<dd><p>A. Derezinska and K. Halas. Experimental evaluation of mutation testing approaches to python programs. In <em>2014 IEEE Seventh International Conference on Software Testing, Verification and Validation Workshops</em>, volume, 156–164. 2014.</p>
+</dd>
+<dt class="bibtex label" id="id8"><span class="brackets"><a class="fn-backref" href="#id1">5</a></span></dt>
+<dd><p>Y. Jia and M. Harman. An analysis and survey of the development of mutation testing. <em>IEEE Transactions on Software Engineering</em>, 37(5):649–678, 2011.</p>
+</dd>
+<dt class="bibtex label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">6</a></span></dt>
+<dd><p>L. Madeyski, W. Orzeszyna, R. Torkar, and M. Józala. Overcoming the equivalent mutant problem: a systematic literature review and a comparative experiment of second order mutation. <em>IEEE Transactions on Software Engineering</em>, 40(1):23–42, 2014.</p>
+</dd>
+</dl>
+</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./testadequacy"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="coverage.html" title="previous page">Structural Testing</a>
+    <a class='right-next' id="next-link" href="../testgeneration/modelbased.html" title="next page">Model-Based Testing</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The World<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
